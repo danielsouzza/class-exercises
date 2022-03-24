@@ -6,6 +6,7 @@ int main()
 {
     int a, b;
     int i = 1;
+    printf("Enter the values of a and b: ");
     scanf("%d %d", &a, &b);
 
     while (i){
@@ -13,7 +14,7 @@ int main()
         if (!(a ^ b)){
             printf("%d == %d\n", a, b);
             i = 0;
-        // if (a > b)
+        // if (a < b)
         }else if (!a){
             if(b) printf("b > a\n");
             break;
