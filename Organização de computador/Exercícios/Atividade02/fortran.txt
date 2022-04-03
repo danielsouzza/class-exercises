@@ -1,0 +1,25 @@
+!Daniel Lima de Souza
+!jdoodle.com/ia/plS
+
+program jdoodle
+implicit none
+integer,dimension(10)::vetor = (/1,2,3,4,5,6,7,8,9,10/)
+integer:: soma=0, aux
+integer:: i, j=10
+!Inverte o vetor, valido apenas para vetor de tamanho 10.
+do i = 1, 5
+    aux = vetor(i)
+    vetor(i) = vetor(j)
+    vetor(j) = aux
+    j = J - 1
+end do
+!Soma o elementos com indice par do vetor.
+do i = 1, 10
+    if(mod(i,2) == 0) then
+        soma = soma + vetor(i)
+    end if
+end do
+!Mostra na tela o resultado
+print*,vetor
+print*,"A soma dos elemntos de índice par é =",soma
+end program jdoodle

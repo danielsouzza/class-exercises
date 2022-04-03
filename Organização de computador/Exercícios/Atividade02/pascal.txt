@@ -1,0 +1,40 @@
+{Daniel Lima de Souza}
+{jdoodle.com/ia/plW}
+Program AddNums(output);
+    var {Variáves }
+        vetor :array[0..9] of integer;
+        soma, i, j,aux: integer;
+    begin
+        {Cria o vetot}
+        soma := 0; j := 9;
+        for i := 0 to 9 do
+                vetor[i] := i+1;
+        
+        {Mostra o vetor}
+        WriteLn;
+        WriteLn ('Arry normal');
+        for i := 0 to 9 do
+            write(vetor[i],' ');
+        WriteLn;   
+        {Inverte o vetor}
+        for i := 0 to 4 do
+            begin
+                aux := vetor[i];
+                vetor[i] := vetor[j];
+                vetor[j] := aux;
+                j := j-1;
+            end;
+        {Soma os elementos de índices par do vetor }
+        for i := 0 to 9 do
+            begin
+                if (i mod 2) = 0 then 
+                    soma := soma + vetor[i];
+            end;
+        {Mostra o resultado final}
+        WriteLn;
+        WriteLn ('Arry invertido');
+        for i := 0 to 9 do
+            write(vetor[i],' ');
+        WriteLn;
+        writeln ('A soma do elemento de índice par = ',soma)
+end.
