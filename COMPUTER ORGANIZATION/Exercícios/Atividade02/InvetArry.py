@@ -1,4 +1,5 @@
 #Inverte os elementos do vetor
+#Não sei podia usar arry = arry[::-1] então fiz assim:
 def InvertArry(vetor):
     aux,k= 0,1
     size = len(vetor)
@@ -20,7 +21,7 @@ def SumArry(vetor):
 
 #Função principal
 def main():
-    arry = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    arry = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10
     InvertArry(arry)
     print("Arry invertido :",arry)
     print("A soma dos elementos de índice par é = {}".format(SumArry(arry)))
