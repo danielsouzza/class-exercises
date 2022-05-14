@@ -1,4 +1,5 @@
 import java.util.Scanner;
+// teste
 
 public class Cpu {
     static Scanner input = new Scanner(System.in);
