@@ -1,20 +1,17 @@
 import java.util.Scanner;
 // teste
 
-public class Cpu {
+public class Main {
     static Scanner input = new Scanner(System.in);
     static int mar, mbr;
     public static void main(String[] args) {
-        Memory ram = new Memory();
+        MemoryManagementUnit mmu = new MemoryManagementUnit();
         int option;
 
         do {
             // controller();
             limpaTela();
-            System.out.println("===== Memory RAM =====");
-            String instructions = 
-            String.format("[1] - Escrever na memoria\n[2] - Ler um dado da memoria");
-            System.out.println(instructions);
+            controller();
             System.out.printf("> ");
             try {
                 option = Integer.valueOf(input.nextLine());
@@ -27,50 +24,69 @@ public class Cpu {
                     limpaTela();
                     break;
                 case 1 :
-                    write(ram);
+                    write(mmu);
                     break;
                 case 2 :
-                    read(ram);
+                    read(mmu);
+                    break;
+                case 3 :
+                    readAll(mmu);
                     break;
             }
             
         } while (option != 0);        
     }
 
-    public static void write(Memory ram){
+    public static void write(MemoryManagementUnit mmu){
         limpaTela();
         System.out.println("===== Barramento de entrada =====");
-        System.out.printf("Mar (0 - 1023) -> ");
-        mar = input.nextInt();
         System.out.printf("Mbr -> ");
         mbr = input.nextInt();
-        ram.write(mar, mbr);
+        try {
+            mmu.write(mbr);
+        } catch (MemoryManagementUnitException e) {
+            System.out.println(e.getMessage());
+        }
         
-        System.out.println();
-        System.out.println("Press <enter> to go back");
+        System.out.println("\nPress <ENTER> to go back");
         input.nextLine(); //Clear buffer
         input.nextLine(); //
     }
 
-    public static void read(Memory ram){
+    public static void read(MemoryManagementUnit mmu){
         limpaTela();
         System.out.println("===== Barramento de saida =====");
-        System.out.printf("mar (0 - 1023) -> ");
+        System.out.printf("mar (0 - 15) -> ");
         mar = input.nextInt();
-        System.out.printf("Mar -> %d | Mbr -> %d\n", mar, ram.read(mar));
+        try {
+            System.out.printf("Mar -> %d | Mbr -> %d\n", mar, mmu.read(mar));
+        } catch (MemoryManagementUnitException e) {
+            System.out.println(e.getMessage());
+        }
         
-        System.out.println();
-        System.out.println("Press <enter> to go back");
+        System.out.println("\nPress <ENTER> to go back");
         input.nextLine(); //Clear buffer
         input.nextLine();
+    }
+
+    public static void readAll(MemoryManagementUnit mmu){
+        limpaTela();
+        Integer[] memoria =  mmu.read();
+        System.out.println("===== Barramento de saida =====");
+        for(int mar = 0 ; mar < mmu.getSize(); mar++){
+            System.out.printf("Mar -> %d\t| Mbr -> %d\n", mar, memoria[mar]);
+        }
+        
+        System.out.println("\nPress <ENTER> to go back");
+        input.nextLine(); //Clear buffer
     }
 
     public static void controller(){
         limpaTela();
         System.out.println("===== Memory RAM =====");
         String instructions = 
-            String.format("[1] - Escrever na memoria\n[2] - Ler um dado da memoria");
-        System.out.println(instructions);
+            String.format("[1] - Escrever na memória\n[2] - Ler um dado da memória\n");
+        System.out.println(instructions + "[3] - Ler toda a memória");
     }
 
     private static void limpaTela() {

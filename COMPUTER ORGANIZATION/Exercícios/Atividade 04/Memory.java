@@ -1,9 +1,9 @@
 public class Memory {
-    static private int size = 1024;
-    private int[] memory_vector;
+    static private int size = 16;
+    private Integer[] memory_vector;
 
     public Memory() {
-        this.memory_vector = new int[size];
+        this.memory_vector = new Integer[size];
         size = memory_vector.length;
         for (int i = 0; i < size; i++) {
             this.memory_vector[i] = 0;
@@ -16,6 +16,14 @@ public class Memory {
 
     public int read(int mar){
         return this.memory_vector[mar];
+    }
+
+    public Integer[] getRam(){
+        return this.memory_vector;
+    }
+
+    public int getSize(){
+        return size;
     }
 
 }
