@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import model.conta.Conta;
 
-public class RepositorioContaLista implements RepositorioConta {
+import java.io.Serializable;
+
+
+public class RepositorioContaLista implements Serializable, RepositorioConta {
     
     List<Conta> contas;
     

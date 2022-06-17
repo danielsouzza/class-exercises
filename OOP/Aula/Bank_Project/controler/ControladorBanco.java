@@ -9,18 +9,28 @@ import repository.conta.ContaJaCadastradaException;
 import repository.conta.RepositorioConta;
 import model.conta.Conta;
 import model.conta.SaldoInsuficienteException;
-import java.util.List;
 import repository.cliente.RepositorioClienteLista;
 import repository.conta.RepositorioContaLista;
+import java.util.List;
+import strategy.*;
+import java.io.*;
 
 public class ControladorBanco {
-    
+    // Arquivo para salvar os dados
+    private final File file = new File("banco.dat");
+  
     private RepositorioCliente repositorioCliente;
     private RepositorioConta repositorioConta;
+    private NumberGeneratorStrategy numberStrategy;
 
     public ControladorBanco() {
+      if (file.exists()) {
+        loadData();
+      } else {
         repositorioCliente = new RepositorioClienteLista();
         repositorioConta = new RepositorioContaLista();
+        numberStrategy = new SequentialNumberStrategy();
+      }
     }
 
     public void inserirCliente(Cliente cliente) throws CPFJaCadastradoException {
@@ -51,6 +61,7 @@ public class ControladorBanco {
     }
     
     public Conta inserirConta(Conta conta) throws ContaJaCadastradaException {
+        conta.setNumero(numberStrategy.nextNumber());
         return repositorioConta.inserirConta(conta);
     }
 
@@ -99,7 +110,38 @@ public class ControladorBanco {
     }
 
     public void exit() {
-        // Nada para fazer
+      try {
+        FileOutputStream f = new FileOutputStream(file);
+        ObjectOutputStream o = new ObjectOutputStream(f);
+
+        // Salvar meus dados
+        o.writeObject(repositorioCliente);
+        o.writeObject(repositorioConta);
+        o.writeObject(numberStrategy);
+
+        o.close();
+        f.close();
+      } catch (IOException e) {
+        System.err.println("Erro de serialização de objeto");
+        e.printStackTrace();
+      }
     }
 
+  private void loadData() {
+        try {
+          FileInputStream f = new FileInputStream(file);
+          ObjectInputStream o = new ObjectInputStream(f);
+
+          repositorioCliente = (RepositorioCliente) o.readObject();
+          repositorioConta = (RepositorioConta) o.readObject();
+          numberStrategy = (SequentialNumberStrategy) o.readObject();
+
+          o.close();
+          f.close();          
+        } catch (ClassNotFoundException e) {
+          System.err.println("Definição da classe não encontrada");
+        } catch (IOException e) {
+          System.err.println("Erro ao carregar dados do arquivo");
+        }
+  }
 }

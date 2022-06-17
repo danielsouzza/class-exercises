@@ -6,6 +6,8 @@ import repository.cliente.ClienteNaoCadastradoException;
 import model.conta.Conta;
 import model.conta.ContaCorrente;
 import model.conta.ContaPoupanca;
+import model.conta.ExtratoItem;
+// import model.conta.ExtratoConta;
 import model.conta.ContaEspecial;
 import repository.conta.ContaJaCadastradaException;
 import repository.conta.ContaNaoCadastradaException;
@@ -84,15 +86,9 @@ class Main {
   }
 
   private static void limpaTela() {
-    try{
-      if (System.getProperty("os.name").contains("Windows")){
-          new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-      }else{
-          ProcessBuilder pb = new ProcessBuilder("clear");
-          Process startProcess = pb.inheritIO().start();
-          startProcess.waitFor();
-      }
-    } catch (Exception e){}
+    for (int i = 0; i < 25; i++) {
+      System.out.println();
+    }
   }
 
   private static void cadastroClientes() {
@@ -622,17 +618,33 @@ class Main {
   }
 
   private static void extrato(String numeroConta) {
-    // TODO Implementar extrato da conta
-    /*
-     * Exemplo:
-     * Data     Historico                 Valor           T
-     * ======== ========================= =============== =
-     *          Saldo anterior                    R$ 0,00
-     * 14/01/19 Depósito                        R$ 500,00 C
-     * 14/01/19 Saque                            R$ 30,00 D
-     * 14/01/19 Tranferido para conta #2         R$ 25,00 D
-     *          Saldo atual                     R$ 445,00
-     */
+    limpaTela();
+    try {
+      Conta conta = controlador.buscarConta(numeroConta);
+      System.out.printf("Data     Histórico                 Valor           T\n");
+      System.out.printf("======== ========================= =============== =\n");
+
+      List<ExtratoItem> extrato = conta.getExtratoConta().getExtrato();
+      int size = extrato.size() - 1;
+      for(ExtratoItem item : extrato){
+        System.out.printf("%8s ",item.getData());
+        System.out.printf("%-25s ",item.getHistorico());
+        System.out.printf("R$%13.2f ",item.getValor());
+        System.out.printf("%s\n",item.getTipo());
+      }
+      System.out.printf("%8s ","");
+      System.out.printf("%-25s ","Saldo atual");
+      System.out.printf("R$%13.2f ",extrato.get(size).getSaldoPosterior());
+      System.out.printf("%s\n","");
+
+      
+    } catch (ContaNaoCadastradaException ex) {
+      System.err.println(ex.getMessage());
+    }
+
+    System.out.println();
+    System.out.println("tecle <enter> para voltar");
+    scanner.nextLine();
   }
 
   private static void listarContas() {
