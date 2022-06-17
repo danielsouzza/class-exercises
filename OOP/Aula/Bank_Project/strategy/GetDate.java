@@ -8,5 +8,5 @@ public class GetDate implements CurrentDate{
         SimpleDateFormat f = new SimpleDateFormat("dd/MM/yy");
         Date data = new Date();
         return f.format(data);
-      }
+    }
 }

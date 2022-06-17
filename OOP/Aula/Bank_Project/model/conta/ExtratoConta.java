@@ -2,8 +2,6 @@ package model.conta;
 import java.util.List;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.ArrayList;
 
 public class ExtratoConta implements Serializable{
@@ -33,9 +31,4 @@ public class ExtratoConta implements Serializable{
     return new ArrayList<>(extrato);
   }
 
-  public String getDate(){
-    SimpleDateFormat f = new SimpleDateFormat("dd/MM/yy");
-    Date data = new Date();
-    return f.format(data);
-  }
 }
