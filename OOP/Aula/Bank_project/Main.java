@@ -634,7 +634,7 @@ class Main {
         extrato.addAll(conta.getExtratoConta().getExtrato(data_i));
       }else if(!(data_i.equals("")) ^ !(data_f.equals(""))){
         String date = (data_i.equals("") ? data_f : data_i);
-        extrato.addAll(conta.getExtratoConta().getExtrato(date)); 
+        extrato.addAll(conta.getExtratoConta().getExtrato(date));
       }else{
         extrato.addAll(conta.getExtratoConta().getExtrato(data_i));
         extrato.addAll(conta.getExtratoConta().getExtrato(data_f));

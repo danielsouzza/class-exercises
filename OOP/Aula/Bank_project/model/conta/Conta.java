@@ -31,7 +31,7 @@ public abstract class Conta implements Serializable {
     private void sacar(double valor, String historico) throws SaldoInsuficienteException {
         if (valor <= this.getDisponivelParaSaque()) {
             this.saldo -= valor;
-            this.lancamento(historico,valor,"D",(this.getSaldo()-valor), this.getSaldo());
+            this.lancamento(historico,valor,"D",(this.getSaldo()+valor), this.getSaldo());
         } else {
             throw new SaldoInsuficienteException(this);
         }
